@@ -1,7 +1,10 @@
 import '../css/main.css';
+import PropTypes from 'prop-types';
+
 import {Component} from "react";
 
 class ShopItemClass extends Component {
+
     render() {
         const {item} = this.props;
 
@@ -18,12 +21,30 @@ class ShopItemClass extends Component {
                 </div>
                 <div className="divider"/>
                 <div className="purchase-info">
-                    <div className="price">{currency}{price}</div>
+                    <div className="price">{currency}{price.toFixed(2)}</div>
                     <button>Добавить в корзину</button>
                 </div>
             </div>
         )
     }
+}
+
+ShopItemClass.propTypes = {
+    brand: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    descriptionFull: PropTypes.string,
+    currency: PropTypes.string,
+    price: PropTypes.number
+}
+
+ShopItemClass.defaultProps = {
+    brand: "",
+    title: "",
+    description: "",
+    descriptionFull: "",
+    currency: "USD",
+    price: 0.00
 }
 
 export default ShopItemClass;

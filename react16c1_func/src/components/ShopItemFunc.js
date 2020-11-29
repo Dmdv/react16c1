@@ -1,4 +1,5 @@
 import '../css/main.css';
+import PropTypes from 'prop-types';
 
 const ShopItemFunc = ({ item }) => {
 
@@ -15,11 +16,29 @@ const ShopItemFunc = ({ item }) => {
             </div>
             <div className="divider"/>
             <div className="purchase-info">
-                <div className="price">{currency}{price}</div>
+                <div className="price">{currency}{price.toFixed(2)}</div>
                 <button>Добавить в корзину</button>
             </div>
         </div>
     )
 };
+
+ShopItemFunc.propTypes = {
+    brand: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    descriptionFull: PropTypes.string,
+    currency: PropTypes.string,
+    price: PropTypes.number
+}
+
+ShopItemFunc.defaultProps = {
+    brand: "",
+    title: "",
+    description: "",
+    descriptionFull: "",
+    currency: "USD",
+    price: 0.00
+}
 
 export default ShopItemFunc;
