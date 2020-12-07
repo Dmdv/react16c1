@@ -1,5 +1,6 @@
 import '../css/main.css'
 import PropTypes from 'prop-types'
+import moment from "moment";
 
 const WeekDays = ({days}) => {
     return <thead>
@@ -18,15 +19,27 @@ WeekDays.propTypes = {
     days: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
 }
 
-const CurrentDayHeader = () => {
+const CurrentDayHeader = ({currentDate}) => {
+
+    const {weekday, day, month, year} = currentDate;
+
     return <div className="ui-datepicker-material-header">
-        <div className="ui-datepicker-material-day">Среда</div>
+        <div className="ui-datepicker-material-day">{weekday}</div>
         <div className="ui-datepicker-material-date">
-            <div className="ui-datepicker-material-day-num">8</div>
-            <div className="ui-datepicker-material-month">Марта</div>
-            <div className="ui-datepicker-material-year">2017</div>
+            <div className="ui-datepicker-material-day-num">{day}</div>
+            <div className="ui-datepicker-material-month">{month}</div>
+            <div className="ui-datepicker-material-year">{year}</div>
         </div>
     </div>;
+}
+
+CurrentDayHeader.propTypes = {
+    currentDate: PropTypes.shape({
+        weekday: PropTypes.string,
+        day: PropTypes.string,
+        month: PropTypes.string,
+        year: PropTypes.string
+    })
 }
 
 const DatePickerHeader = () => {
@@ -37,6 +50,8 @@ const DatePickerHeader = () => {
         </div>
     </div>;
 }
+
+// TODO: Add an array of dates with a mark that a day from the other month and which day is today
 
 const DatesGrid = () => {
     return <tbody>
@@ -74,7 +89,16 @@ const Columns = () => {
     </colgroup>;
 }
 
-const Calendar = ({props}) => {
+const Calendar = () => {
+
+    const [weekday, month, year, day] = moment().format('dddd MMMM YYYY DD').split(' ');
+
+    const currentDate = {
+        weekday: weekday,
+        day: day,
+        month: month,
+        year: year
+    }
 
     const days = [
         ['Понедельник', 'Пн'],
@@ -88,7 +112,7 @@ const Calendar = ({props}) => {
 
     return (
         <div className="ui-datepicker">
-            <CurrentDayHeader/>
+            <CurrentDayHeader currentDate={currentDate}/>
             <DatePickerHeader/>
             <table className="ui-datepicker-calendar">
                 <Columns/>
